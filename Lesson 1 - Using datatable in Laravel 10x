@@ -8,56 +8,12 @@
 		'DataTables' => \Yajra\DataTables\Facades\DataTables::class,
 	],
 3- php artisan vendor:publish --provider="Yajra\DataTables\DataTablesServiceProvider"
- - php artisan make:model Employee -m
- - in employee migration file
-  Schema::create('employees', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->decimal('salary');
-            $table->string('department');
-            $table->timestamps();
-        });
-- in Employee Model
-    protected $table = "employees";
-    protected $fillable = [
-        "name",
-        "email",
-        "phone",
-        "salary",
-        "department",
-    ];
-- php artisan migrate
-4- php artisan datatables:make Employee
 
-    public function html()
-    {
-        return $this->builder()
-                    ->setTableId('employee-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1);
+4- Import link
+    <link href="{{ asset('datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
+    
 
-    }
+    <script src="{{ asset('datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('datatable/js/dataTables.bootstrap5.min.js') }}"></script>
 
-    protected function getColumns()
-    {
-        return [
-            'id',
-           'name',
-           'email',
-           'phone',
-           'salary',
-           'department',
-        ];
-    }
-5- php artisan make:controller EmployeeController --resource
-  public function index(UserDataTable $datatable){
-        return $datatable->render('employee');
 
-    }
-6- create route: 
-Route::resource('employee', EmployeeController::class);
-
-7- view/employee.blade.php
